@@ -88,7 +88,7 @@ sub user_preferences {
         $idUrl =~ s/\s+/:/g;
     }
 
-    $args->{'vars'}->{openid_pref_url} = $value;
+    $args->{'vars'}->{openid_pref_url} = $idUrl;
 
     # Set the 'handled' scalar reference to true so that the caller
     # knows the panel name is valid and that an extension took care of it.
