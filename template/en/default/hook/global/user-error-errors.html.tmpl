@@ -1,15 +1,39 @@
-[%# Note that error messages should generally be indented four spaces, like
+[%
+#-------------------------------------------------------------------------------
+#
+#   This file is part of Bugzilla-OpenID.
+#
+#   Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
+#
+#   Bugzilla-OpenID is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU Library General Public
+#   License as published by the Free Software Foundation; either
+#   version 2 of the License, or (at your option) any later version.
+#
+#   Bugzilla-OpenID is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   Library General Public License for more details.
+#
+#   You should have received a copy of the GNU Library General Public
+#   License along with Bugzilla-OpenID.
+#   If not, write to the Free Software Foundation, Inc.,
+#   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+#  @author Jacky Alciné <jackyalcine@gmail.com>
+#  @date 04/23/12 10:00:46 AM
+#
+#
+#-------------------------------------------------------------------------------
+  # Note that error messages should generally be indented four spaces, like
   # below, because when Bugzilla translates an error message into plain
-  # text, it takes four spaces off the beginning of the lines. 
+  # text, it takes four spaces off the beginning of the lines.
   #
   # Note also that I prefixed my error name with "example", the name of my
   # extension, so that I wouldn't conflict with other error names in
   # Bugzilla or other extensions.
   #%]
-[% IF error == "example_my_error" %]
-   [% title = "Example Error Title" %]
-   This is the error message! It contains <em>some html</em>.
-[% ELSIF error == "example_short_desc_invalid" %]
-  [% title = "Bad Summary" %]
-  The Summary must contain the word "example".
+[% IF error == "openid_error_invalid_url" %]
+   [% title = "Invalid OpenID Url" %]
+   The URL you've provided is invalid.
 [% END %]

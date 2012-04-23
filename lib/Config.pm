@@ -1,25 +1,31 @@
-# -*- Mode: perl; indent-tabs-mode: nil -*-
+#-------------------------------------------------------------------------------
 #
-# The contents of this file are subject to the Mozilla Public
-# License Version 1.1 (the "License"); you may not use this file
-# except in compliance with the License. You may obtain a copy of
-# the License at http://www.mozilla.org/MPL/
+#   This file is part of Bugzilla-OpenID.
 #
-# Software distributed under the License is distributed on an "AS
-# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
-# implied. See the License for the specific language governing
-# rights and limitations under the License.
+#   Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
 #
-# The Original Code is the Bugzilla Example Plugin.
+#   Bugzilla-OpenID is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU Library General Public
+#   License as published by the Free Software Foundation; either
+#   version 2 of the License, or (at your option) any later version.
 #
-# The Initial Developer of the Original Code is Canonical Ltd.
-# Portions created by Canonical Ltd. are Copyright (C) 2008
-# Canonical Ltd. All Rights Reserved.
+#   Bugzilla-OpenID is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#   Library General Public License for more details.
 #
-# Contributor(s): Max Kanat-Alexander <mkanat@bugzilla.org>
-#                 Bradley Baetz <bbaetz@acm.org>
+#   You should have received a copy of the GNU Library General Public
+#   License along with Bugzilla-OpenID.
+#   If not, write to the Free Software Foundation, Inc.,
+#   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+#  @author Jacky Alciné <jackyalcine@gmail.com>
+#  @date 04/23/12 9:53:37 AM
+#
+#
+#-------------------------------------------------------------------------------
 
-package Bugzilla::Extension::Example::Config;
+package Bugzilla::Extension::OpenID::Config;
 use strict;
 use warnings;
 

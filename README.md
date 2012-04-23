@@ -21,6 +21,9 @@ Bugzilla-OpenID allows the following:
    - login with said OpenID Url.
    - link accounts to OpenID Url.
 
+ - Administration can:
+   - require all users to attach a OpenID Url to accounts.
+
 ***
 
 Jacky Alcine <jacky.alcine@thesii.org>

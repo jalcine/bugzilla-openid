@@ -11,20 +11,19 @@
   #
   # The Original Code is the Bugzilla Example Plugin.
   #
-  # The Initial Developer of the Original Code is Frédéric Buclin.
-  # Portions created by the Initial Developer are Copyright (C) 2010
-  # the Initial Developer. All Rights Reserved.
+  # The Initial Developer of the Original Code is Canonical Ltd.
+  # Portions created by Canonical Ltd. are Copyright (C) 2008
+  # Canonical Ltd. All Rights Reserved.
   #
-  # Contributor(s): Frédéric Buclin <LpSolit@gmail.com>
+  # Contributor(s): Bradley Baetz <bbaetz@acm.org>
   #%]
+[%
+    title = "OpenID"
+    desc = "Configure OpenID support"
+%]
 
-<p>
-  Type some short text in the field below. Whitespaces will be replaced
-  by colons.
-</p>
-
-<p>
-  <label for="example_pref">Short text:</label>
-  <input type="text" id="example_pref" name="example_pref" size="30"
-         maxlength="50" value="[% example_pref FILTER html %]">
-</p>
+[% param_descs = {
+        openid_enabled        => "Enable OpenID",
+        openid_create_account => "Permit users to create new users accounts."
+    }
+%]

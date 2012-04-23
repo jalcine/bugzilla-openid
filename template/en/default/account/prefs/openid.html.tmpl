@@ -1,3 +1,4 @@
+[%#
 #-------------------------------------------------------------------------------
 #
 #   This file is part of Bugzilla-OpenID.
@@ -20,19 +21,19 @@
 #   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 #  @author Jacky Alciné <jackyalcine@gmail.com>
-#  @date 04/23/12 9:52:03 AM
+#  @date 04/23/12 9:56:41 AM
 #
 #
 #-------------------------------------------------------------------------------
+  #%]
 
-package Bugzilla::Extension::OpenID::Auth::Verify;
-use strict;
-use base qw(Bugzilla::Auth::Verify);
-use Bugzilla::Constants;
+<p>
+    Use this page to configure <a href="http://openid.net">OpenID</a>
+    and your account.
+</p>
 
-# A verifier that always fails.
-sub check_credentials {
-    my $failure = { failure => AUTH_NO_SUCH_USER };
-}
-
-1;
+<p>
+  <label for="openid_pref_url">URL:</label>
+  <input type="text" id="openid_pref_url" name="openid_pref_url" size="30"
+         value="[% openid_pref_url FILTER html %]">
+</p>
