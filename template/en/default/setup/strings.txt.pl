@@ -26,7 +26,7 @@
 #-------------------------------------------------------------------------------
 
 %strings = (
-  feature_example_acme => 'Example Extension: Acme Feature',
+
 );
 
 1;
