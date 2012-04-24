@@ -36,10 +36,15 @@ sub get_param_list {
 
     my @param_list = (
     {
-        name => 'example_string',
-        type => 't',
-        default => 'EXAMPLE',
+        name => 'openid_enabled',
+        type => 'b',
+        default => 'true'
     },
+    {
+	name => 'openid_can_register',
+	type => 'b',
+	default => 'false'
+    }
     );
     return @param_list;
 }

@@ -37,6 +37,15 @@ use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
 
+sub get_page {
+    my ($id) = @_;
+
+    if ($id == "confirmation-page"){
+	}
+
+    return correct_urlbase();
+}
+
 # Build the consumer that we'll use.
 $consumer = Net::OpenID::Consumer->new(
     ua    => LWPx::ParanoidAgent->new,
@@ -79,14 +88,21 @@ sub get_login_info {
             return 0;
         },
         verified => sub {
-            # TODO: Return BZ_OPENID_LOGIN_SUCCESS
+            # TODO: Find a way to pull the user's password.
             my ($vident) = @_;
-            my $url = $vident->url;
+	    $sreg = $vident->signed_extension_fields(
+	        'http://openid.net/extensions/sreg/1.1',
+	    );
+
+	    return {
+		username => $sreg->email,
+		realname => $sreg->fullname
+	    }
         },
         error => sub {
             # TODO: Return BZ_OPENID_LOGIN_ERROR
             my ($errcode,$errtext) = @_;
-            die("Error validating identity: $errcode: $errcode");
+            return 0;
         },
     );
 }

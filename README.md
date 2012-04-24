@@ -6,6 +6,11 @@ Provides OpenID support for Bugzilla
 
 ***
 
+## Required Modules
+
+bugzilla-openid needs Net::OpenID::Consumer in order to consume
+those tasty OpenID urls.
+
 ## About
 
 This plug-in was a dire request from the team behind the Synthetic Intellect
