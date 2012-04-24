@@ -51,13 +51,15 @@ sub config_add_panels {
 # NOTE: Should OpenID provide verification schemes?
 sub config_modify_panels {
     my ($self, $args) = @_;
+    my $panels = $args->{'panels'};
+    my $auth_panel_params = $panels->{'auth'}->{'params'};
 
-    my $panels = $args->{panels};
+    my ($user_info_class) =
+                grep { $_->{'name'} eq 'user_info_class' } @$auth_panel_params;
 
-    my $auth_params = $panels->{'auth'}->{params};
-    my ($info_class)   = grep($_->{name} eq 'user_info_class', @$auth_params);
-
-    push(@{ $info_class->{choices} },   'OpenID,CGI');
+    if ($user_info_class) {
+        push(@{ $user_info_class->{'choices'} }, "OpenID,CGI");
+    }
 }
 
 # TODO: Devise a proper schema for OpenID.
