@@ -1,0 +1,10 @@
+[%
+ # TODO: Determine a means of pulling OpenID data from the user.
+ %]
+[% IF Param('user_info_class').split(',').contains('OpenID') %]
+
+[% USE Bugzilla %]
+[% cgi = Bugzilla.cgi %]
+
+<img src="extensions/OpenID/web/icon.png" alt="Log-in with OpenID" />
+[% END %]

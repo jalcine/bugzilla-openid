@@ -1,0 +1,8 @@
+[%#  
+  # TODO: Add the needed link to handle OpenID registeration. 
+  #%]
+
+[% IF Param('user_info_class').split(',').contains('OpenID') %]
+Or, register with your OpenID account:
+<a href="#"><img src="extensions/OpenID/web/button.png"></a>
+[% END %]
