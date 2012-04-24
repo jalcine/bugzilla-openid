@@ -35,6 +35,16 @@ use constant REQUIRED_MODULES => [
         module  => 'Net::OpenID::Consumer',
         version => 1.13,
     },
+    {
+	package => 'Cache::File',
+	module  => 'Cache::File',
+	version => 'any',
+    },
+    {
+	package => 'LWPx::ParanoidAgent',
+	module  => 'LWPx::ParanoidAgent',
+	version => 'any',
+    }
 ];
 
 __PACKAGE__->NAME;
