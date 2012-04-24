@@ -37,12 +37,12 @@ use constant REQUIRED_MODULES => [
     },
     {
 	package => 'Cache::File',
-	module  => 'Cache::File',
+	module  => 'Cache',
 	version => 'any',
     },
     {
 	package => 'LWPx::ParanoidAgent',
-	module  => 'LWPx::ParanoidAgent',
+	module  => 'LWPx',
 	version => 'any',
     }
 ];
