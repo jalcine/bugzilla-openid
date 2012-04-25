@@ -31,80 +31,44 @@ use strict;
 use base qw(Bugzilla::Auth::Login);
 use constant user_can_create_account => 1;
 use Bugzilla;
-
-use Bugzilla::Constants;
-use Cache::File;
-use LWPx::ParanoidAgent;
-use Net::OpenID::Consumer;
+use Bugzilla::Util;
+use OpenID::Login;
 
 sub get_page {
     my ($id) = @_;
+    my $url = correct_urlbase();
 
-    if ($id == "confirmation-page"){
+    if ($id == "confirm"){
+        $url += "/page.cgi?id=openid-redirect.html"
+	} else if ($id == "handle"){
+        $url += "/page.cgi?id=openid-auth.html"
 	}
 
-    return correct_urlbase();
+	return $url;
 }
 
-# Build the consumer that we'll use.
-$consumer = Net::OpenID::Consumer->new(
-    ua    => LWPx::ParanoidAgent->new,
-    cache => Cache::File->new( cache_root => '/tmp/mycache' ),
-    args  => Bugzilla::$cgi,
-    required_root => $installBasePath,
-    assoc_options => [
-        max_encrypt => 1,
-        session_no_encrypt_https => 1,
-    ],
-);
+sub get_openid_auth_page {
+    my ($claimedID) = @_;
 
-sub connect_to_openid_server {
-    my $failure = { failure => AUTH_NODATA };
-
-    my $claimedID = $consumer->claimed_identify( $user_Url );
-    unless ($claimedID)
-        return $failure;
-
-    my $checkClaimedID = $claimedID->check_url(
-        return_to      => $confirmationPage,
-        trust_root     => $baseRoot,
-        delayed_return => 1
+    my $o = OpenID::Login->new(
+        claimed_id => $claimedID,
+        return_to  => get_page("auth")
     );
+    return $o->get_auth_url();
 }
 
 sub get_login_info {
-    return $csr->handle_server_response(
-        not_openid => sub {
-            # TODO: Return BZ_OPENID_LOGIN_INVALID
-            return 0;
-        },
-        setup_needed => sub {
-            # TODO: Return BZ_OPENID_LOGIN_SETUP
-            return 0;
-        },
-        cancelled => sub {
-            # TODO: Return BZ_OPENID_LOGIN_CANCELLED
-            # TODO: Should fall back to classic authentication.
-            return 0;
-        },
-        verified => sub {
-            # TODO: Find a way to pull the user's password.
-            my ($vident) = @_;
-	    $sreg = $vident->signed_extension_fields(
-	        'http://openid.net/extensions/sreg/1.1',
-	    );
-
-	    return {
-		username => $sreg->email,
-		realname => $sreg->fullname
-	    }
-        },
-        error => sub {
-            # TODO: Return BZ_OPENID_LOGIN_ERROR
-            my ($errcode,$errtext) = @_;
-            return 0;
-        },
+    my $cgi = cgi();
+    my $o = OpenID::Login->new(
+        cgi         => $cgi,
+        return_to   => get_page("auth")
     );
+
+    my $id = $o->verify_auth();
+
+    if ($id){
+
+    }
 }
 
 1;

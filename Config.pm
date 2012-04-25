@@ -31,20 +31,13 @@ use strict;
 use constant NAME => 'OpenID';
 use constant REQUIRED_MODULES => [
     {
-        package => 'Net::OpenID::Consumer',
-        module  => 'Net::OpenID::Consumer',
-        version => 1.13,
-    },
-    {
-	package => 'Cache::File',
-	module  => 'Cache',
-	version => 'any',
-    },
-    {
-	package => 'LWPx::ParanoidAgent',
-	module  => 'LWPx',
-	version => 'any',
+        package => 'OpenID::Login',
+        module  => 'OpenID::Login',
+        version => 0.1.0,
     }
+];
+
+use constant OPTIONAL_MODULES => [
 ];
 
 __PACKAGE__->NAME;
