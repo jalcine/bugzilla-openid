@@ -30,9 +30,10 @@ package Bugzilla::Extension::OpenID::Auth::Login;
 use strict;
 use Bugzilla;
 use Bugzilla::Util;
-use LWPx;
 use Cache::File;
+use LWPx::ParanoidAgent;
 use base qw(Bugzilla::Auth::Login);
+
 # TODO: Add support for creating accounts.
 #use constant user_can_create_account => 1;
 
