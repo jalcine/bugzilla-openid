@@ -65,8 +65,4 @@ sub get_login_info {
     return 0;
 }
 
-sub fail_nodata {
-    return 0;
-}
-
 1;
