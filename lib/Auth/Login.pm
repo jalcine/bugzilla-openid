@@ -51,18 +51,19 @@ my $consumer = Net::OpenID::Consumer->new(
 
 sub get_login_info {
     my ($login_data) = @_;
-    return ($login_data,$consumer->handle_server_response(
+    return ($login_data,
+            $consumer->handle_server_response(
             not_openid => sub {
-                return $login_data;
+                return {};
             },
             setup_needed => sub {
-                return $login_data;
+                return {};
             },
             cancelled => sub {
-                return $login_data;
+                return {};
             },
             error => sub {
-                return $login_data;
+                return {};
             },
             verified => sub {
                 my ($ident) = @_;
