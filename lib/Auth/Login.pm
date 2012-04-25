@@ -29,6 +29,7 @@ package Bugzilla::Extension::OpenID::Auth::Login;
 
 use strict;
 use Bugzilla::Util;
+use Bugzilla::Auth;
 use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
