@@ -28,7 +28,6 @@
 package Bugzilla::Extension::OpenID::Auth::Login;
 
 use strict;
-use Bugzilla;
 use Bugzilla::Util;
 use Cache::File;
 use LWPx::ParanoidAgent;
@@ -38,20 +37,20 @@ use base qw(Bugzilla::Auth::Login);
 # TODO: Add support for creating accounts.
 #use constant user_can_create_account => 1;
 
-my $consumer = Net::OpenID::Consumer->new(
-    ua              => LWPx::ParanoidAgent->new,
-    cache           => Cache::File->new (
-                        cache_root => '/tmp'
-    ),
-    args            => Bugzilla->cgi(),
-    consumer_secret => "04ByswYpRSyAtw7Re4hN6kOdw5M34nyAAlLldk",
-    required_root   => correct_urlbase()
-);
 
 
 sub get_login_info {
     my ($login_data) = @_;
-    print "<b>Sample text to see when this is printed.</b>";
+    my $consumer = Net::OpenID::Consumer->new(
+        ua              => LWPx::ParanoidAgent->new,
+        cache           => Cache::File->new (
+                            cache_root => '/tmp'
+        ),
+        args            => Bugzilla->cgi(),
+        consumer_secret => "04ByswYpRSyAtw7Re4hN6kOdw5M34nyAAlLldk",
+        required_root   => correct_urlbase()
+    );
+
     return ($login_data,
             $consumer->handle_server_response(
             not_openid => sub {
