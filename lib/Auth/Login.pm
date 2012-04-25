@@ -36,39 +36,43 @@ use OpenID::Login;
 
 sub get_page {
     my ($id) = @_;
-    my $url = correct_urlbase();
+    $url = correct_urlbase();
 
     if ($id == "confirm"){
         $url += "/page.cgi?id=openid-redirect.html"
-	} else if ($id == "handle"){
+    } else if ($id == "handle"){
         $url += "/page.cgi?id=openid-auth.html"
-	}
+    }
 
-	return $url;
+    return $url;
 }
 
 sub get_openid_auth_page {
     my ($claimedID) = @_;
 
-    my $o = OpenID::Login->new(
+    $o = OpenID::Login->new(
         claimed_id => $claimedID,
         return_to  => get_page("auth")
     );
+
     return $o->get_auth_url();
 }
 
 sub get_login_info {
-    my $cgi = cgi();
-    my $o = OpenID::Login->new(
+    $cgi = cgi();
+    $o = OpenID::Login->new(
         cgi         => $cgi,
         return_to   => get_page("auth")
     );
 
-    my $id = $o->verify_auth();
+    $id = $o->verify_auth();
 
     if ($id){
-
+        # TODO: Handle the authentication.
+        print $id;
     }
+
+    return 0;
 }
 
 1;
