@@ -51,7 +51,7 @@ my $consumer = Net::OpenID::Consumer->new(
 
 sub get_login_info {
     my ($login_data) = @_;
-    return (%login_data,$consumer->handle_server_response(
+    return ($login_data,$consumer->handle_server_response(
             not_openid => sub {
                 return $login_data;
             },
