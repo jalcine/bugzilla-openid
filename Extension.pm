@@ -38,7 +38,7 @@ sub auth_login_methods {
     my $modules = $args->{modules};
 
     if (exists $modules->{OpenID}) {
-        #$modules->{OpenID} = 'Bugzilla/Extension/OpenID/Auth/Login.pm';
+        $modules->{OpenID} = 'Bugzilla/Extension/OpenID/Auth/Login.pm';
     }
 }
 

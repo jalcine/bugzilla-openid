@@ -54,8 +54,7 @@ sub get_login_info {
         return_to   => correct_urlbase() + "/page.cgi?id=openid-verify.html"
     );
 
-    # Uncommenting this raises a run-time exeception.
-    #$id = $o->verify_auth();
+    $id = $o->verify_auth();
 
     if ($id){
         # TODO: Handle the authentication.
