@@ -35,7 +35,6 @@ use constant user_can_create_account => 1;
 use OpenID::Login;
 
 my $o = undef;
-my $cgi = Bugzilla->cgi();
 my $id = undef;
 
 sub get_openid_auth_page {
@@ -51,7 +50,7 @@ sub get_openid_auth_page {
 
 sub get_login_info {
     $o = OpenID::Login->new(
-        cgi         => $cgi,
+        cgi         => Bugzilla->cgi(),
         return_to   => correct_urlbase() + "/page.cgi?id=openid-verify.html"
     );
 
