@@ -1,0 +1,5 @@
+* Enable log-ins with OpenIDs.
+* Automatically link OpenID urls to existing accounts.
+ * make this optional.
+* Use the settings 'openid.urls' as the configuration options to allow
+  multiple URIs.

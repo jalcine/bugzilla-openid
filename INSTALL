@@ -8,3 +8,8 @@ Installing Bugzilla-OpenID is quite simple.
  * Run ./install-module.pl Net::OpenID::Consumer to install the OpenID consumer.
  * Run ./checksetup.pl to ensure that the correct tables are generated.
  * Configure and enjoy!
+
+## Dependencies
+
+ * You'd need the GMP library in order to build Crypt::DH::GMP
+   (needed by Net::OpenID::Consumer) from CPAN.
