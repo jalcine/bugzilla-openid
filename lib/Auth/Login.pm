@@ -62,7 +62,7 @@ sub get_login_info {
         print $id;
     }
 
-    %data = {
+    my %data = {
         username => "",
         password => "",
         realname => ""
