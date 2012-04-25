@@ -31,9 +31,14 @@ use strict;
 use constant NAME => 'OpenID';
 use constant REQUIRED_MODULES => [
     {
-        package => 'OpenID::Login',
-        module  => 'OpenID::Login',
+        package => 'LWPx::ParanoidAgent',
+        module  => 'LWPx::ParanoidAgent',
         version => 0.1.0,
+    },
+    {
+        package => 'Cache::File',
+        module  => 'Cache::File',
+        version => 0.1
     }
 ];
 

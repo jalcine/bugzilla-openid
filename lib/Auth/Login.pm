@@ -30,44 +30,47 @@ package Bugzilla::Extension::OpenID::Auth::Login;
 use strict;
 use Bugzilla;
 use Bugzilla::Util;
+use LWPx;
+use Cache::File;
 use base qw(Bugzilla::Auth::Login);
-use constant user_can_create_account => 1;
-use OpenID::Login;
+# TODO: Add support for creating accounts.
+#use constant user_can_create_account => 1;
 
-my $o = undef;
-my $id = undef;
+my $consumer = Net::OpenID::Consumer->new(
+    ua              => LWPx::ParanoidAgent->new,
+    cache           => Cache::File->new (
+                        cache_root => '/tmp'
+    ),
+    args            => Bugzilla->cgi(),
+    consumer_secret => "04ByswYpRSyAtw7Re4hN6kOdw5M34nyAAlLldk",
+    required_root   => correct_urlbase()
+);
 
-sub get_openid_auth_page {
-    my ($claimedID) = @_;
-
-    $o = OpenID::Login->new(
-        claimed_id => $claimedID,
-        return_to  => correct_urlbase() + "/page.cgi?id=openid-auth.html"
-    );
-
-    return $o->get_auth_url();
-}
 
 sub get_login_info {
-    $o = OpenID::Login->new(
-        cgi         => Bugzilla->cgi(),
-        return_to   => correct_urlbase() + "/page.cgi?id=openid-verify.html"
+    return $consumer->handle_server_response(
+        not_openid => sub {
+            return {};
+        },
+        setup_needed => sub {
+            return {};
+        },
+        cancelled => sub {
+            return {};
+        },
+        error => sub {
+            return {};
+        },
+        verified => sub {
+            my ($ident) = @_;
+
+            return {
+                username => $ident->email,
+                password => "",
+                realname => $ident->fullname
+            };
+        }
     );
-
-    $id = $o->verify_auth();
-
-    if ($id){
-        # TODO: Handle the authentication.
-        print $id;
-    }
-
-    my $data = {
-        username => "",
-        password => "",
-        realname => ""
-    };
-
-    return $data;
 }
 
 1;
