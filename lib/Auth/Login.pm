@@ -40,7 +40,6 @@ use base qw(Bugzilla::Auth::Login);
 
 
 sub get_login_info {
-    my ($login_data) = @_;
     my $consumer = Net::OpenID::Consumer->new(
         ua              => LWPx::ParanoidAgent->new,
         cache           => Cache::File->new (
@@ -51,30 +50,49 @@ sub get_login_info {
         required_root   => correct_urlbase()
     );
 
-    return ($login_data,
-            $consumer->handle_server_response(
-            not_openid => sub {
-                return {};
-            },
-            setup_needed => sub {
-                return {};
-            },
-            cancelled => sub {
-                return {};
-            },
-            error => sub {
-                return {};
-            },
-            verified => sub {
-                my ($ident) = @_;
+    return $consumer->handle_server_response(
+        not_openid => sub {
+            # The user provided an invalid OpenID.
+            return {
+                failure => AUTH_ERROR
+            };
+        },
+        setup_needed => sub {
+            # This is something the user needs to do.
+            # Configuring a new OpenID account.
+            return {
+                failure => AUTH_ERROR
+            };
+        },
+        cancelled => sub {
+            # Cancelled the log-in.
+            return {
+                failure => AUTH_LOGINFAILED
+            };
+        },
+        error => sub {
+            # An error on the OpenID server occurred.
+            return {
+                failure => AUTH_ERROR
+            };
+        },
+        verified => sub {
+            # Authentication succeeded.
+            my ($ident) = @_;
+            my $email = $ident->email;
 
+            my $user_id = Bugzilla::User->login_to_id($email);
+
+            if ($user_id == 0){
                 return {
-                    username => $ident->email,
-                    password => "",
-                    realname => $ident->fullname
+                    failure => AUTH_LOGINFAILED
+                };
+            } else {
+                return {
+                    user_id => $user_id;
                 };
             }
-        )
+        }
     );
 }
 
