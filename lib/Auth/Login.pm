@@ -27,16 +27,15 @@
 
 package Bugzilla::Extension::OpenID::Auth::Login;
 
-use strict;
 use base qw(Bugzilla::Auth::Login);
 use constant user_can_create_account => 1;
 use Bugzilla;
 use Bugzilla::Util;
 use OpenID::Login;
 
-my $o = undef;
-my $cgi = cgi();
-my $id = undef;
+$o = undef;
+$cgi = cgi();
+$id = undef;
 
 sub get_openid_auth_page {
     my ($claimedID) = @_;
