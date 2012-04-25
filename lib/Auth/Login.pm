@@ -62,7 +62,11 @@ sub get_login_info {
         print $id;
     }
 
-    return 0;
+    return (
+        username => "",
+        password => "",
+        realname => ""
+    );
 }
 
 1;
