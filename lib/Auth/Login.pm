@@ -32,6 +32,7 @@ use Bugzilla;
 use Bugzilla::Util;
 use Cache::File;
 use LWPx::ParanoidAgent;
+use Net::OpenID::Consumer;
 use base qw(Bugzilla::Auth::Login);
 
 # TODO: Add support for creating accounts.
