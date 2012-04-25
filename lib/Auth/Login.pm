@@ -34,6 +34,10 @@ use Bugzilla;
 use Bugzilla::Util;
 use OpenID::Login;
 
+$o = undef;
+$cgi = cgi();
+$id = undef;
+
 sub get_openid_auth_page {
     my ($claimedID) = @_;
 
@@ -46,7 +50,6 @@ sub get_openid_auth_page {
 }
 
 sub get_login_info {
-    $cgi = cgi();
     $o = OpenID::Login->new(
         cgi         => $cgi,
         return_to   => correct_urlbase() + "/page.cgi?id=openid-verify.html"
