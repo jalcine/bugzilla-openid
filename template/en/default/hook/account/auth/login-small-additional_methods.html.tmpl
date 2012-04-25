@@ -1,5 +1,5 @@
 [% IF Param('user_info_class').split(',').contains('BrowserID') %]
-<a href="[% # Util.page('invoke') %]">
-	<img src="extensions/OpenID/web/button.png" onclick="openid_login()" style="margin-bottom: -8px" alt="Log-in with OpenID">
+<a href="page.cgi?p=openid_continue.html">
+	<img src="extensions/OpenID/web/openid.png" style="margin-bottom: -8px" alt="Log-in with OpenID">
 </a> or
 [% END %]
