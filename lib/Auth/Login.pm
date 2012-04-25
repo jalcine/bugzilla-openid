@@ -65,7 +65,7 @@ sub get_login_info {
 }
 
 sub fail_nodata {
-    return C<exit>;
+    return 0;
 }
 
 1;
