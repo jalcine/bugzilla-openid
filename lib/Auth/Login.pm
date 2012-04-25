@@ -51,6 +51,7 @@ my $consumer = Net::OpenID::Consumer->new(
 
 sub get_login_info {
     my ($login_data) = @_;
+    print "<b>Sample text to see when this is printed.</b>";
     return ($login_data,
             $consumer->handle_server_response(
             not_openid => sub {
