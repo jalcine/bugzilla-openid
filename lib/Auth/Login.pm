@@ -35,7 +35,7 @@ use constant user_can_create_account => 1;
 use OpenID::Login;
 
 my $o = undef;
-my $cgi = Bugzilla::cgi();
+my $cgi = Bugzilla->cgi();
 my $id = undef;
 
 sub get_openid_auth_page {
