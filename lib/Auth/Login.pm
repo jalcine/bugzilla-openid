@@ -34,25 +34,12 @@ use Bugzilla;
 use Bugzilla::Util;
 use OpenID::Login;
 
-sub get_page {
-    my ($id) = @_;
-    $url = correct_urlbase();
-
-    if ($id == "confirm"){
-        $url += "/page.cgi?id=openid-redirect.html"
-    } else if ($id == "handle"){
-        $url += "/page.cgi?id=openid-auth.html"
-    }
-
-    return $url;
-}
-
 sub get_openid_auth_page {
     my ($claimedID) = @_;
 
     $o = OpenID::Login->new(
         claimed_id => $claimedID,
-        return_to  => get_page("auth")
+        return_to  => correct_urlbase() + "/page.cgi?id=openid-auth.html"
     );
 
     return $o->get_auth_url();
@@ -62,7 +49,7 @@ sub get_login_info {
     $cgi = cgi();
     $o = OpenID::Login->new(
         cgi         => $cgi,
-        return_to   => get_page("auth")
+        return_to   => correct_urlbase() + "/page.cgi?id=openid-verify.html"
     );
 
     $id = $o->verify_auth();
