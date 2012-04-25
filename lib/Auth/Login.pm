@@ -34,7 +34,7 @@ use Bugzilla::Util;
 use OpenID::Login;
 
 $o = undef;
-$cgi = cgi();
+$cgi = Bugzilla::cgi();
 $id = undef;
 
 sub get_openid_auth_page {
