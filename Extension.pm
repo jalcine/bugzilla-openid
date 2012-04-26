@@ -97,28 +97,29 @@ sub user_preferences {
 sub page_before_template {
     my ($self,$args) = @_;
 
+    my $cgi = Bugzilla->cgi();
     my $page_id = $args->{'page_id'};
     my $vars    = $args->{'vars'};
 
     if ($page_id eq 'openid_continue.html'){
 
-        $vars->{mode} = $cgi->param('mode');
-        $vars->{openid_redirect_base} = $args->{redirect_to};
+        my $vars->{'mode'} = $cgi->param('mode');
+        $vars->{openid_redirect_base} = $args->{'redirect_to'};
 
-        if ($vars->{mode} eq 'authenticate'){
-            $vars->{openid_url} = $cgi->param('openid_url');
+        if ($vars->{'mode'} eq 'authenticate'){
+            $vars->{'openid_url'} = $cgi->param('openid_url');
         }
 
     } else if ($page_id eq 'openid_authenticate.html') {
-        $vars->{mode} = $cgi->param('mode');
+        my $vars->{'stage'} = $cgi->param('stage');
 
-        if ($vars->{stage} eq 'handle'){
-            $vars->{redirect_to} = $cgi->param('redirect_to');
-            $vars->{openid_url}  = $cgi->param('openid_url');
+        if ($vars->{'stage'} eq 'handle'){
+            $vars->{'redirect_to'} = $cgi->param('redirect_to');
+            $vars->{'openid_url'}  = $cgi->param('openid_url');
 
             my $cident = get_identity(
                 {
-                    url => $vars->{openid_url};
+                    url => $vars->{'openid_url'};
                 }
             );
 
@@ -135,14 +136,14 @@ sub page_before_template {
             my $openid_auth_url = $cident->check_url(
                 {
                     delayed_return      => 1,
-                    return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{redirect_to},
+                    return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{'redirect_to'},
                     trust_root          => correct_urlbase()
                 }
             );
 
-            $vars->{openid_url}     = $cident->claimed_url();
-            $vars->{redirect_auth}  = $openid_auth_url;
-            $vars->{stage}          = "continue";
+            $vars->{'openid_url'}     = $cident->claimed_url();
+            $vars->{'redirect_auth'}  = $openid_auth_url;
+            $vars->{'stage'}          = "continue";
         }
     }
 }
