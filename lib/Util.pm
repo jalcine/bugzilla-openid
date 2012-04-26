@@ -65,7 +65,7 @@ sub get_identity {
 
     unless ($cident){
         return {
-            error   => $consumer->err
+            error   => $consumer->err,
             claimed => 0
         }
     } else {
@@ -80,11 +80,11 @@ sub get_identity {
 sub get_error_text {
     my ($code) = @_;
 
-    if ($code eq empty_url){
+    if ($code eq Net::OpenID::Consumer->$empty_url){
         return "(C) Tried to do discovery on an empty or all-whitespace string.";
-    } elsif ($code eq bogus_url){
+    } elsif ($code eq Net::OpenID::Consumer->$bogus_url){
         return "Tried to do discovery on a non-http:/https: URL."
-    } elsif ($code eq protocol_incorrect_version){
+    } elsif ($code eq Net::OpenID::Consumer->$protocol_incorrect_version){
         return "None of the ID providers found support even the minimum protocol version.";
     }
 }
