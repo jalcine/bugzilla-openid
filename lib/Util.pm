@@ -70,9 +70,9 @@ sub get_identity {
     } else {
         return {
             identity => \$cident,
-            error      => $consumer->err();
-            error_code => $consumer->errcode();
-            error_json => $consumer->jsonerr();
+            error      => $consumer->err(),
+            error_code => $consumer->errcode(),
+            error_json => $consumer->jsonerr(),
             claimed    => 1
         }
     }
