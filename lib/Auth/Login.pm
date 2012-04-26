@@ -31,7 +31,7 @@ use strict;
 use base qw(Bugzilla::Auth::Login);
 use Bugzilla::Util;
 use Bugzilla::Auth;
-use Bugzilla::Constants
+use Bugzilla::Constants;
 use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
