@@ -149,7 +149,7 @@ sub page_before_template {
                 $vars->{'stage'}          = "continue";
             } else {
                 $vars->{'stage'} = "error";
-                $csr = $cident->consumer;
+                my $csr = $cident->consumer;
                 bless $csr;
                 $vars->{'error_message'} = $csr->err();
             }
