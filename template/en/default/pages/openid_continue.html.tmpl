@@ -42,6 +42,7 @@ you aren't.
 [% USE Dumper %]
 <pre>
   [% Dumper.dump_html(cgi) FILTER none %]
+  [% cgi.param("mode") %]
 </pre>
 
 [% PROCESS global/footer.html.tmpl %]
