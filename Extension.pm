@@ -100,10 +100,11 @@ sub page_before_template {
     my $cgi = Bugzilla->cgi();
     my $page_id = $args->{'page_id'};
     my $vars    = $args->{'vars'};
+    my $cident  = undef;
 
-    if ($page_id eq 'openid_continue.html'){
+    if ($page_id eq "openid_continue.html"){
 
-        my $vars->{'mode'} = $cgi->param('mode');
+        $vars->{'mode'} = $cgi->param('mode');
         $vars->{openid_redirect_base} = $args->{'redirect_to'};
 
         if ($vars->{'mode'} eq 'authenticate'){
@@ -111,7 +112,7 @@ sub page_before_template {
         }
 
     } else if ($page_id eq 'openid_authenticate.html') {
-        my $vars->{'stage'} = $cgi->param('stage');
+        $vars->{'stage'} = $cgi->param('stage');
 
         if ($vars->{'stage'} eq 'handle'){
             $vars->{'redirect_to'} = $cgi->param('redirect_to');
