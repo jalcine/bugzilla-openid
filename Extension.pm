@@ -149,7 +149,7 @@ sub page_before_template {
                 $vars->{'stage'}          = "continue";
             } else {
                 $vars->{'stage'} = "error";
-                $vars->{'error_message'} = Bugzilla::Extension::OpenID::Util->get_error_text($cident->{'error'})
+                $vars->{'error_message'} = $cident->consumer->err();
             }
         }
     }
