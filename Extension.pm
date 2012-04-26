@@ -126,9 +126,10 @@ sub page_before_template {
             );
 
             if ($cident->{'claimed'} eq 1){
+                my $ident = $cident->{'identity'};
                 # Set up some extra values to ensure that this OpenID is compatible.
                 # TODO: Allow the privacy policy URL to be modified.
-                $cident->set_extension_args(
+                $ident->set_extension_args(
                     {
                         required    => 'email,fullname',
                         policy_url  => correct_urlbase() + "/page.cgi?id=openid_policy.html"
@@ -136,7 +137,7 @@ sub page_before_template {
                 );
 
                 # TODO: Allow the Bugzilla admin specify the trust_root value.
-                my $openid_auth_url = $cident->check_url(
+                my $openid_auth_url = $ident->check_url(
                     {
                         delayed_return      => 1,
                         return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{'redirect_to'},
@@ -144,7 +145,7 @@ sub page_before_template {
                     }
                 );
 
-                $vars->{'openid_url'}     = $cident->claimed_url();
+                $vars->{'openid_url'}     = $ident->claimed_url();
                 $vars->{'redirect_auth'}  = $openid_auth_url;
                 $vars->{'stage'}          = "continue";
             } else {

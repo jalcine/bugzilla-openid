@@ -69,8 +69,8 @@ sub get_identity {
         }
     } else {
         return {
-            identity => $cident,
-            consumer => $consumer,
+            identity => \$cident,
+            consumer => \$consumer,
             claimed  => 1
         }
     }
