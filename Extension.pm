@@ -110,7 +110,7 @@ sub page_before_template {
             $vars->{'openid_url'} = $cgi->param('openid_url');
         }
 
-    } else if ($page_id eq 'openid_authenticate.html') {
+    } elsif ($page_id eq 'openid_authenticate.html') {
         $vars->{'stage'} = $cgi->param('stage');
 
         if ($vars->{'stage'} eq 'handle'){
@@ -119,7 +119,7 @@ sub page_before_template {
 
             my $cident = get_identity(
                 {
-                    url => $vars->{'openid_url'};
+                    url => $vars->{'openid_url'}
                 }
             );
 
