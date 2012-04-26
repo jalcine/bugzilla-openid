@@ -1,13 +1,8 @@
-[%
- # TODO: Determine a means of pulling OpenID data from the user.
- %]
 [% IF Param('user_info_class').split(',').contains('OpenID') %]
 
 [% USE Bugzilla %]
-[% cgi = Bugzilla.cgi %]
 
-[%  USE Bugzilla::Extension::OpenID::Util  %]
-<a href="[% get_page('handle_authenticate') %]">
+<a href="[% urlbase FILTER none %]page.cgi?id=openid_continue.html&mode=authenticate">
     <img src="extensions/OpenID/web/openid.png" width="32px" style="margin-bottom: -8px" alt="Log-in with OpenID"> OpenID
 </a>
 [% END %]

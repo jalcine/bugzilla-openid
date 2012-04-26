@@ -69,13 +69,6 @@ sub db_schema_abstract_schema {
     #$args->{'schema'}->{'OpenID'} = {};
 }
 
-sub install_update_db {
-    my $dbh = Bugzilla->dbh;
-#    $dbh->bz_add_column('example', 'new_column',
-#                        {TYPE => 'INT2', NOTNULL => 1, DEFAULT => 0});
-#    $dbh->bz_add_index('example', 'example_new_column_idx', [qw(value)]);
-}
-
 # TODO: Devise a proper setup for user configuration.
 sub user_preferences {
     my ($self, $args) = @_;
