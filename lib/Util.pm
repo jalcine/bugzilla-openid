@@ -70,6 +70,7 @@ sub get_identity {
     } else {
         return {
             identity => \$cident,
+            consumer   => bless($consumer,"Net::OpenID::Consumer"),
             error      => $consumer->err(),
             error_code => $consumer->errcode(),
             error_json => $consumer->jsonerr(),
