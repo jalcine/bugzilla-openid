@@ -38,7 +38,7 @@ use Bugzilla::Extension::OpenID::Util qw(get_consumer);
 #use constant user_can_create_account => 1;
 
 sub get_login_info {
-    my $consumer = get_consumer();
+    my $consumer = Util->get_consumer();
     return $consumer->handle_server_response(
         not_openid => sub {
             # The user provided an invalid OpenID.
