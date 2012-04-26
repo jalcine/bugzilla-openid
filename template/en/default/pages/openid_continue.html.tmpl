@@ -23,7 +23,7 @@
    # Handle the page to be used by Bugzilla.
    USE Bugzilla
    cgi = Bugzilla.cgi
-   page_id = 'authenticate'
+   page_id = cgi["param"]["mode"]
  %]
 
 <h2>Continue</h2>
@@ -35,14 +35,8 @@ you aren't.
 
 <script>
     setTimeout(function(){
-        document.location = "[% urlbase FILTER none %]?id=openid_[% page_id FILTER none %].html";
+        document.location = "[% urlbase FILTER none %]page.cgi?id=openid_[% page_id FILTER none %].html";
     },3000);
 </script>
-
-<p>Here's what you passed me:</p>
-[% USE Dumper %]
-<pre>
-  [% Dumper.dump_html(cgi) FILTER none %]
-</pre>
 
 [% PROCESS global/footer.html.tmpl %]
