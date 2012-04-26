@@ -32,6 +32,10 @@ use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
 use base qw(Bugzilla::Util);
+our @EXPORT = qw(
+    get_consumer
+    get_identity
+);
 
 sub get_consumer {
     return Net::OpenID::Consumer->new(
@@ -45,7 +49,7 @@ sub get_consumer {
     );
 }
 
-sub get_identify {
+sub get_identity {
     my ($url) = @_;
 
     my $consumer = get_consumer();
