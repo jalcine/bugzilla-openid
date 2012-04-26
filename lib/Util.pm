@@ -55,9 +55,11 @@ sub get_identity {
 
     my $consumer = get_consumer();
     return $consumer->claimed_identity(
-        return_to      =>  correct_urlbase() + "/?page.cgi=openid_authenticate.html",
-        trust_root     =>  correct_urlbase(),
-        delayed_return => 1
+        {
+            return_to      =>  correct_urlbase() + "/?page.cgi=openid_authenticate.html",
+            trust_root     =>  correct_urlbase(),
+            delayed_return => 1
+        }
     );
 }
 
