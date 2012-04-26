@@ -27,6 +27,7 @@
 
 package Bugzilla::Extension::OpenID;
 use strict;
+use warnings;
 
 use Bugzilla::User;
 use Bugzilla::Util qw(correct_urlbase);
