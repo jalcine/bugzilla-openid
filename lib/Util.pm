@@ -36,6 +36,7 @@ use Net::OpenID::Consumer;
 our @EXPORT = qw(
     get_consumer
     get_identity
+    get_error_text
 );
 
 sub get_consumer {
@@ -54,13 +55,38 @@ sub get_identity {
     my ($url) = @_;
 
     my $consumer = get_consumer();
-    return $consumer->claimed_identity(
+    my $cident = $consumer->claimed_identity(
         {
             return_to      =>  correct_urlbase() + "/?page.cgi=openid_authenticate.html",
             trust_root     =>  correct_urlbase(),
             delayed_return => 1
         }
     );
+
+    unless ($cident){
+        return {
+            error   => $consumer->err
+            claimed => 0
+        }
+    } else {
+        return {
+            identity => $cident,
+            consumer => $consumer,
+            claimed  => 1
+        }
+    }
+}
+
+sub get_error_text {
+    my ($code) = @_;
+
+    if ($code eq empty_url){
+        return "(C) Tried to do discovery on an empty or all-whitespace string.";
+    } elsif ($code eq bogus_url){
+        return "Tried to do discovery on a non-http:/https: URL."
+    } elsif ($code eq protocol_incorrect_version){
+        return "None of the ID providers found support even the minimum protocol version.";
+    }
 }
 
 1;

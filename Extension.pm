@@ -125,27 +125,32 @@ sub page_before_template {
                 }
             );
 
-            # Set up some extra values to ensure that this OpenID is compatible.
-            # TODO: Allow the privacy policy URL to be modified.
-            $cident->set_extension_args(
-                {
-                    required    => 'email,fullname',
-                    policy_url  => correct_urlbase() + "/page.cgi?id=openid_policy.html"
-                }
-            );
+            if ($cident->{'claimed'} eq 1){
+                # Set up some extra values to ensure that this OpenID is compatible.
+                # TODO: Allow the privacy policy URL to be modified.
+                $cident->set_extension_args(
+                    {
+                        required    => 'email,fullname',
+                        policy_url  => correct_urlbase() + "/page.cgi?id=openid_policy.html"
+                    }
+                );
 
-            # TODO: Allow the Bugzilla admin specify the trust_root value.
-            my $openid_auth_url = $cident->check_url(
-                {
-                    delayed_return      => 1,
-                    return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{'redirect_to'},
-                    trust_root          => correct_urlbase()
-                }
-            );
+                # TODO: Allow the Bugzilla admin specify the trust_root value.
+                my $openid_auth_url = $cident->check_url(
+                    {
+                        delayed_return      => 1,
+                        return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{'redirect_to'},
+                        trust_root          => correct_urlbase()
+                    }
+                );
 
-            $vars->{'openid_url'}     = $cident->claimed_url();
-            $vars->{'redirect_auth'}  = $openid_auth_url;
-            $vars->{'stage'}          = "continue";
+                $vars->{'openid_url'}     = $cident->claimed_url();
+                $vars->{'redirect_auth'}  = $openid_auth_url;
+                $vars->{'stage'}          = "continue";
+            } else {
+                $vars->{'stage'} = "error";
+                $vars->{'error-message'} = Bugzilla::Extension::OpenID::Util->get_error_text($cident->{'error'})
+            }
         }
     }
 }
