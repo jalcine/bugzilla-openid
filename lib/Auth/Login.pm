@@ -38,8 +38,6 @@ use base qw(Bugzilla::Auth::Login);
 # TODO: Add support for creating accounts.
 #use constant user_can_create_account => 1;
 
-
-
 sub get_login_info {
     my $consumer = Net::OpenID::Consumer->new(
         ua              => LWPx::ParanoidAgent->new,

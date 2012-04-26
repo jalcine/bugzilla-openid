@@ -28,7 +28,28 @@
 #  text, it takes four spaces off the beginning of the lines.
 #-------------------------------------------------------------------------------
 #%]
-[% IF error == "openid_error_invalid_url" %]
-   [% title = "Invalid OpenID Url" %]
-   The URL you've provided is invalid.
+
+[%# INTERFACE:
+  # header_done: boolean. True if the header has already been printed.
+  # error: string. The tag of the error.
+  # variables: hash. Useful data about the problem. The keys are the variable
+  #  names, and the values the variable values.
+  #%]
+
+[%# This is a list of all the possible code errors for OpenID so far.
+  #
+  # Errors:
+  # - openid_invalid
+  # - openid_setup_needed
+  #%]
+
+[% error_message = BLOCK %]
+  [% IF error == "openid_setup_needed" %]
+    [% title = "OpenID Requires Setup" %]
+    The OpenID server you chose to use requires initial setup.
+
+  [% ELSIF error == "openid_invalid" %]
+    [% title = "Invalid OpenID account" %]
+    The OpenID URL you've provided was invalid.
+  [% END %]
 [% END %]
