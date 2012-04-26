@@ -32,13 +32,13 @@ use base qw(Bugzilla::Auth::Login);
 use Bugzilla::Util;
 use Bugzilla::Auth;
 use Bugzilla::Constants;
-use Bugzilla::Extension::OpenID::Util qw(get_consumer);
+use Bugzilla::Extension::OpenID::Util;
 
 # TODO: Add support for creating accounts.
 #use constant user_can_create_account => 1;
 
 sub get_login_info {
-    my $consumer = Util->get_consumer();
+    my $consumer = Bugzilla::Extension::OpenID::Util->get_consumer();
     return $consumer->handle_server_response(
         not_openid => sub {
             # The user provided an invalid OpenID.
