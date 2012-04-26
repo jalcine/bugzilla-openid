@@ -28,12 +28,13 @@
 package Bugzilla::Extension::OpenID::Auth::Login;
 
 use strict;
+use base qw(Bugzilla::Auth::Login);
 use Bugzilla::Util;
 use Bugzilla::Auth;
+use Bugzilla::Constants
 use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
-use base qw(Bugzilla::Auth::Login);
 
 # TODO: Add support for creating accounts.
 #use constant user_can_create_account => 1;
@@ -104,7 +105,7 @@ sub fail_nodata {
     my $cgi = Bugzilla->cgi;
     my $template = Bugzilla->template;
 
-    if (Bugzilla->usage_mode != USAGE_MODE_BROWSER) {
+    if (Bugzilla->usage_mode != Bugzilla::Constants->USAGE_MODE_BROWSER) {
         ThrowUserError('login_required');
     }
 
