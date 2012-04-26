@@ -149,7 +149,7 @@ sub page_before_template {
                 $vars->{'stage'}          = "continue";
             } else {
                 $vars->{'stage'} = "error";
-                $vars->{'error_message'} = $cident->consumer->err();
+                $vars->{'error_message'} = (\$cident->consumer)->err();
             }
         }
     }
