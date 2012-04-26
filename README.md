@@ -1,4 +1,4 @@
-bugzilla-openid
+# bugzilla-openid
 
 ===
 
