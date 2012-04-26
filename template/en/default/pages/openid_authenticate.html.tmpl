@@ -40,6 +40,12 @@ setTimeout(function(){
 
     [% ELSIF stage == "claim" %]
     YAY!
+    [% ELSIF stage == "error" %]
+    An error occurred while attempting to validate your OpenID.
+
+    <p>
+        <b>E</b>: [% error_message FILTER html %]
+    </p>
     [% END %]
 
 <p><b>Data from Bugzilla.cgi</b></p>
