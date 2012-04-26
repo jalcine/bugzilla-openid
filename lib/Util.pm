@@ -28,6 +28,7 @@
 package Bugzilla::Extension::OpenID::Util;
 use strict;
 use warnings;
+
 use Bugzilla::Util qw(correct_urlbase);
 use Cache::File;
 use LWPx::ParanoidAgent;

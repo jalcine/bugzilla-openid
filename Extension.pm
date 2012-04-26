@@ -31,7 +31,7 @@ use warnings;
 
 use Bugzilla::User;
 use Bugzilla::Util qw(correct_urlbase);
-use Bugzilla::Extension::OpenID::Util;
+use Bugzilla::Extension::OpenID::Util qw(get_identity);
 
 use base qw(Bugzilla::Extension);
 
@@ -119,7 +119,7 @@ sub page_before_template {
             $vars->{'redirect_to'} = $cgi->param('redirect_to');
             $vars->{'openid_url'}  = $cgi->param('openid_url');
 
-            my $cident = Util->get_identity(
+            my $cident = get_identity(
                 {
                     url => $vars->{'openid_url'}
                 }
