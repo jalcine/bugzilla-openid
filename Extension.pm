@@ -30,6 +30,9 @@ use strict;
 use base qw(Bugzilla::Extension);
 
 use Bugzilla::User;
+use Bugzilla::Extension::OpenID::Util qw(
+    get_identity
+);
 
 our $VERSION = '0.1';
 
@@ -89,6 +92,59 @@ sub user_preferences {
     # Set the 'handled' scalar reference to true so that the caller
     # knows the panel name is valid and that an extension took care of it.
     $$handled = 1;
+}
+
+sub page_before_template {
+    my ($self,$args) = @_;
+
+    my $page_id = $args->{'page_id'};
+    my $vars    = $args->{'vars'};
+
+    if ($page_id eq 'openid_continue.html'){
+
+        $vars->{mode} = $cgi->param('mode');
+        $vars->{openid_redirect_base} = $args->{redirect_to};
+
+        if ($vars->{mode} eq 'authenticate'){
+            $vars->{openid_url} = $cgi->param('openid_url');
+        }
+
+    } else if ($page_id eq 'openid_authenticate.html') {
+        $vars->{mode} = $cgi->param('mode');
+
+        if ($vars->{stage} eq 'handle'){
+            $vars->{redirect_to} = $cgi->param('redirect_to');
+            $vars->{openid_url}  = $cgi->param('openid_url');
+
+            my $cident = get_identity(
+                {
+                    url => $vars->{openid_url};
+                }
+            );
+
+            # Set up some extra values to ensure that this OpenID is compatible.
+            # TODO: Allow the privacy policy URL to be modified.
+            $cident->set_extension_args(
+                {
+                    required    => 'email,fullname',
+                    policy_url  => correct_urlbase() + "/page.cgi?id=openid_policy.html"
+                }
+            );
+
+            # TODO: Allow the Bugzilla admin specify the trust_root value.
+            my $openid_auth_url = $cident->check_url(
+                {
+                    delayed_return      => 1,
+                    return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{redirect_to},
+                    trust_root          => correct_urlbase()
+                }
+            );
+
+            $vars->{openid_url}     = $cident->claimed_url();
+            $vars->{redirect_auth}  = $openid_auth_url;
+            $vars->{stage}          = "continue";
+        }
+    }
 }
 
 # TODO: In the future, provide a service permitting OpenID-based log-ins.
