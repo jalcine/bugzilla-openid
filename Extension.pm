@@ -31,9 +31,7 @@ use warnings;
 
 use Bugzilla::User;
 use Bugzilla::Util qw(correct_urlbase);
-use Bugzilla::Extension::OpenID::Util qw(
-    get_identity
-);
+use Bugzilla::Extension::OpenID::Util;
 
 use base qw(Bugzilla::Extension);
 
