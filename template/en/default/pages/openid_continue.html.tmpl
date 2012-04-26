@@ -18,10 +18,25 @@
 [% PROCESS global/header.html.tmpl
     title = "OpenID: Continue"
 %]
-<p>Here's what you passed me:</p>
-[% USE Dumper %]
-<pre>
-  [% Dumper.dump_html(cgi_variables) FILTER none %]
-</pre>
+
+[% #
+   # Handle the page to be used by Bugzilla.
+   USE Bugzilla
+   cgi = Bugzilla.cgi
+   page_id = cgi
+ %]
+
+<h2>Continue</h2>
+<img src="extensions/OpenID/web/openid.png" width="64px" align="right" />
+
+Bugzilla is now enacting upon your request. You should be redirected in 3 seconds.
+Click <a href="[% urlbase FILTER none %]page.cgi?id=openid_[% page_url FILTER none %].html">here</a> if
+you aren't.
+
+<script>
+    setTimeout(function(){
+        document.location = "[% urlbase FILTER none %]?id=openid_[% page_url FILTER none %].html";
+    },3000);
+</script>
 
 [% PROCESS global/footer.html.tmpl %]
