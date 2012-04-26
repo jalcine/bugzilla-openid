@@ -120,7 +120,7 @@ sub page_before_template {
             $vars->{'redirect_to'} = $cgi->param('redirect_to');
             $vars->{'openid_url'}  = $cgi->param('openid_url');
 
-            my $cident = Bugzilla::Extenstion::OpenID::Util->get_identity(
+            my $cident = get_identity(
                 {
                     url => $vars->{'openid_url'}
                 }
