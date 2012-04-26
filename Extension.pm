@@ -28,6 +28,7 @@
 package Bugzilla::Extension::OpenID;
 use base qw(Bugzilla::Extension);
 
+use Bugzilla qw(correct_urlbase);
 use Bugzilla::User;
 use Bugzilla::Extension::OpenID::Util qw(
     get_identity
