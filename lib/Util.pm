@@ -31,7 +31,6 @@ use warnings;
 use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
-use base qw(Bugzilla::Util);
 our @EXPORT = qw(
     get_consumer
     get_identity
