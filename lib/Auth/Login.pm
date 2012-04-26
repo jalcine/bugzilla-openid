@@ -97,4 +97,23 @@ sub get_login_info {
     );
 }
 
+
+# Copied from Bugzilla::Extensions::BrowserID::Auth::Login
+sub fail_nodata {
+    my ($self) = @_;
+    my $cgi = Bugzilla->cgi;
+    my $template = Bugzilla->template;
+
+    if (Bugzilla->usage_mode != USAGE_MODE_BROWSER) {
+        ThrowUserError('login_required');
+    }
+
+    print $cgi->header();
+
+    $template->process("account/auth/login.html.tmpl",
+                       { 'target' => $cgi->url(-relative=>1) })
+        || ThrowTemplateError($template->error());
+    exit;
+}
+
 1;
