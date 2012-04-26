@@ -90,7 +90,7 @@ sub get_login_info {
                 };
             } else {
                 return {
-                    user_id => $user_id;
+                    user_id => $user_id
                 };
             }
         }
