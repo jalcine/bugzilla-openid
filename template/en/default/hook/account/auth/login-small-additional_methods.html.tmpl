@@ -1,6 +1,6 @@
 [% IF Param('user_info_class').split(',').contains('BrowserID') %]
 [%  use Bugzilla::Extension::OpenID::Util  %]
 <a href="[% get_page('handle_authenticate') %]">
-    <img src="extensions/OpenID/web/openid.png" style="margin-bottom: -8px" alt="Log-in with OpenID"> OpenID
+    <img src="extensions/OpenID/web/openid.png" width="32px"  style="margin-bottom: -8px" alt="Log-in with OpenID"> OpenID
 </a> or
 [% END %]
