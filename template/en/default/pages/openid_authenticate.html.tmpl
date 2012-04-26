@@ -16,13 +16,15 @@
   #
   #%]
 [% PROCESS global/header.html.tmpl
-    title = "OpenID: Authenticate"
+   USE Bugzilla
+   title = "OpenID: Authenticate"
+   cgi = Bugzilla.cgi
 %]
 
-<p>Here's what you passed me:</p>
+<p><b>Data from Bugzilla.cgi</b></p>
 [% USE Dumper %]
 <pre>
-  [% Dumper.dump_html(cgi_variables) FILTER none %]
+  [% Dumper.dump_html(cgi) FILTER none %]
 </pre>
 
 [% PROCESS global/footer.html.tmpl %]
