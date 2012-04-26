@@ -26,7 +26,6 @@
 #-------------------------------------------------------------------------------
 
 package Bugzilla::Extension::OpenID;
-use strict;
 use base qw(Bugzilla::Extension);
 
 use Bugzilla::User;
