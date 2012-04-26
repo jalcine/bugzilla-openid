@@ -28,14 +28,25 @@
 <h2>Continue</h2>
 <img src="extensions/OpenID/web/openid.png" width="64px" align="right" />
 
-Bugzilla is now enacting upon your request. You should be redirected in 3 seconds.
-Click <a href="[% urlbase FILTER none %]page.cgi?id=openid_[% cgi.param("mode") %].html">here</a> if
-you aren't.
-
-<script>
-    setTimeout(function(){
-        document.location = "[% urlbase FILTER none %]page.cgi?id=openid_[% cgi.param("mode") %].html";
-    },3000);
-</script>
-
+[% IF mode == 'authenticate' %]
+<form method   = "post"
+      action   = "page.cgi"
+      name     = "openid_auth">
+    <input type = "hidden" name = "id"          value = "openid_authenticate.html" />
+    <input type = "hidden" name = "stage"       value = "handle" />
+    <input type=  "hidden" name = "redirect_to" value = "[% openid_redirect_base %]" />
+    <p>
+        <label for="openid_url">
+            <img src="extensions/OpenID/web/icon.png" width="16" />
+            <b>URL:</b>
+        </label>
+        <input name  = "openid_url"
+               type  = "text"
+               value = "[% cgi.param("openid_url") %]" />
+    </p>
+    <p>
+        <button type="submit">Continue</button>
+    </p>
+</form>
+[% END %]
 [% PROCESS global/footer.html.tmpl %]
