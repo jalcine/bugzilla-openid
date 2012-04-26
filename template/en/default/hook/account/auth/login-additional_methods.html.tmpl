@@ -6,7 +6,7 @@
 [% USE Bugzilla %]
 [% cgi = Bugzilla.cgi %]
 
-[%  use Bugzilla::Extension::OpenID::Util  %]
+[%  USE Bugzilla::Extension::OpenID::Util  %]
 <a href="[% get_page('handle_authenticate') %]">
     <img src="extensions/OpenID/web/openid.png" width="32px" style="margin-bottom: -8px" alt="Log-in with OpenID"> OpenID
 </a>
