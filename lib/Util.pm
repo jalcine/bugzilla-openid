@@ -28,6 +28,7 @@
 package Bugzilla::Extension::OpenID::Util;
 use strict;
 use warnings;
+use Bugzilla;
 use Cache::File;
 use LWPx::ParanoidAgent;
 use Net::OpenID::Consumer;
