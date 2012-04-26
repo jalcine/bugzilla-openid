@@ -28,55 +28,32 @@
 package Bugzilla::Extension::OpenID::Util;
 use strict;
 use warnings;
-use Bugzilla;
-use base qw(Bugzilla::Auth::Login);
+use Cache::File;
+use LWPx::ParanoidAgent;
+use Net::OpenID::Consumer;
+use base qw(Bugzilla::Util);
 
-# There's three major phases; register, authenticate and add.
-#
-# register     - Registers a new OpenID account.
-# authenticate - Handles the authentication work for OpenID.
-# add          - Adds a OpenID identity to the user account.
-#
-# In order that redirects are properly setup, there's a redirection
-# page that pushes the user to the needed location, and providing
-# a bit more information about said redirection.
-#
-sub get_page {
-    my ($page_id) = @_;
-    my $url = correct_urlbase() + "/page.cgi?id=";
+sub get_consumer {
+    return Net::OpenID::Consumer->new(
+        ua              => LWPx::ParanoidAgent->new,
+        cache           => Cache::File->new (
+                            cache_root => '/tmp'
+        ),
+        args            => Bugzilla->cgi(),
+        consumer_secret => "04ByswYpRSyAtw7Re4hN6kOdw5M34nyAAlLldk",
+        required_root   => correct_urlbase()
+    );
+}
 
-    switch ($page_id){
-        case "handle_register":
-            $url += "openid_continue.html&mode=register";
-        break;
+sub get_identify {
+    my ($url) = @_;
 
-        case "handle_authenticate"
-            $url += "openid_continue.html&mode=authenticate";
-        break;
-
-        case "handle_add"
-            $url += "openid_continue.html&mode=add";
-        break
-
-        case "handle_add":
-            $url += "openid_add.html";
-        break;
-
-        case "handle_register":
-            $url += "openid_register.html";
-        break;
-
-        case "handle_authenticate"
-            $url += "openid_authenticate.html";
-        break;
-
-        default:
-            # TODO: Should we throw an error?
-            $url = correct_urlbase();
-        break;
-    }
-
-    return $url;
+    my $consumer = get_consumer();
+    return $consumer->claimed_identify(
+        return_to      =>  correct_urlbase() + "/?page.cgi=openid_authenticate.html",
+        trust_root     =>  correct_urlbase(),
+        delayed_return => 1
+    );
 }
 
 1;
