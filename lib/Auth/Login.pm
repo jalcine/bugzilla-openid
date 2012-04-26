@@ -53,27 +53,27 @@ sub get_login_info {
         not_openid => sub {
             # The user provided an invalid OpenID.
             return {
-                failure => AUTH_NODATA
+                failure => Bugzilla::Auth->AUTH_NODATA
             };
         },
         setup_needed => sub {
             # This is something the user needs to do.
             # Configuring a new OpenID account.
             return {
-                failure => AUTH_ERROR,
+                failure => Bugzilla::Auth->AUTH_ERROR,
                 error   => "openid_setup_needed"
             };
         },
         cancelled => sub {
             # Cancelled the log-in.
             return {
-                failure => AUTH_NODATA
+                failure => Bugzilla::Auth->AUTH_NODATA
             };
         },
         error => sub {
             # An error on the OpenID server occurred.
             return {
-                failure => AUTH_ERROR,
+                failure => Bugzilla::Auth->AUTH_ERROR,
                 error   => "openid_error"
             };
         },
@@ -86,7 +86,7 @@ sub get_login_info {
 
             if ($user_id == 0){
                 return {
-                    failure => AUTH_LOGINFAILED
+                    failure => Bugzilla::Auth->AUTH_LOGINFAILED
                 };
             } else {
                 return {
