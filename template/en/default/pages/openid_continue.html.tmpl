@@ -39,4 +39,9 @@ you aren't.
     },3000);
 </script>
 
+[% USE Dumper %]
+<pre>
+  [% Dumper.dump_html(cgi) FILTER none %]
+</pre>
+
 [% PROCESS global/footer.html.tmpl %]
