@@ -119,30 +119,26 @@ sub page_before_template {
             $vars->{'redirect_to'} = $cgi->param('redirect_to');
             $vars->{'openid_url'}  = $cgi->param('openid_url');
 
-            my $cident = Bugzilla::Extension::OpenID::Util->get_identity(
-                {
-                    url => $vars->{'openid_url'}
-                }
-            );
+            my $cident = Bugzilla::Extension::OpenID::Util->get_identity($vars->{'openid_url'});
 
             if ($cident->{'claimed'} eq 1){
                 my $ident = $cident->{'identity'};
+                $ident = $$ident;
+
                 # Set up some extra values to ensure that this OpenID is compatible.
                 # TODO: Allow the privacy policy URL to be modified.
-                $ident->set_extension_args(
+                $ident->set_extension_args('http://openid.net/extensions/sreg/1.1',
                     {
                         required    => 'email,fullname',
-                        policy_url  => correct_urlbase() + "/page.cgi?id=openid_policy.html"
+                        policy_url  => correct_urlbase() . "/page.cgi?id=openid_policy.html"
                     }
                 );
 
                 # TODO: Allow the Bugzilla admin specify the trust_root value.
                 my $openid_auth_url = $ident->check_url(
-                    {
                         delayed_return      => 1,
-                        return_to           => correct_urlbase() + "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" + $vars->{'redirect_to'},
+                        return_to           => correct_urlbase() . "/page.cgi?id=openid_authenticate.html&stage=claim&redirect_to=" . $vars->{'redirect_to'},
                         trust_root          => correct_urlbase()
-                    }
                 );
 
                 $vars->{'openid_url'}     = $ident->claimed_url();
