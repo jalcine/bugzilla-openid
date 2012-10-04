@@ -41,9 +41,8 @@ our @EXPORT = qw(
 sub get_consumer {
     return Net::OpenID::Consumer->new(
         ua              => LWPx::ParanoidAgent->new,
-        cache           => Cache::File->new (
-                            cache_root => '/tmp'
-        ),
+        #USING THIS CAUSED PROBLEMS WITH perl -wT
+        #cache           => Cache::File->new ( cache_root => '/tmp'),
         args            => Bugzilla->cgi(),
         consumer_secret => "04ByswYpRSyAtw7Re4hN6kOdw5M34nyAAlLldk",
         required_root   => correct_urlbase()
@@ -51,26 +50,20 @@ sub get_consumer {
 }
 
 sub get_identity {
-    my ($url) = @_;
+    my $url = $_[1];
 
     my $consumer = get_consumer();
-    my $cident = $consumer->claimed_identity(
-        {
-            return_to      =>  correct_urlbase() + "/?page.cgi=openid_authenticate.html",
-            trust_root     =>  correct_urlbase(),
-            delayed_return => 1
-        }
-    );
+    my $claimed_identity = $consumer->claimed_identity($url);
 
-    unless ($cident){
+    unless ($claimed_identity){
         return {
             error   => $consumer->err,
             claimed => 0
         }
     } else {
         return {
-            identity => \$cident,
-            consumer   => bless($consumer,"Net::OpenID::Consumer"),
+            identity => \$claimed_identity,
+            consumer   => $consumer,
             error      => $consumer->err(),
             error_code => $consumer->errcode(),
             error_json => $consumer->json_err(),
