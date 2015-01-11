@@ -1,3 +1,8 @@
+# This plugin is NOT being maintained.
+
+I'm open to transferring this repository for those willing to do. Please email
+me at yo@jacky.wtf
+
 # bugzilla-openid
 
 ===
@@ -31,4 +36,4 @@ Bugzilla-OpenID allows the following:
 
 ***
 
-Jacky Alcine <jacky.alcine@thesii.org>
+Jacky Alcine <yo@jacky.wtf>
