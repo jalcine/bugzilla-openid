@@ -26,9 +26,9 @@
 #-------------------------------------------------------------------------------
 
 package Bugzilla::Extension::Example::WebService;
+use base qw(Bugzilla::WebService);
 use strict;
 use warnings;
-use base qw(Bugzilla::WebService);
 use Bugzilla::Error;
 
 # TODO: Open a simple log-in method.

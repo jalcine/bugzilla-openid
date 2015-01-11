@@ -41,9 +41,9 @@ sub get_param_list {
         default => 'true'
     },
     {
-	name => 'openid_can_register',
-	type => 'b',
-	default => 'false'
+        name => 'openid_can_register',
+        type => 'b',
+        default => 'false'
     }
     );
     return @param_list;

@@ -9,8 +9,6 @@ me at yo@jacky.wtf
 
 Provides OpenID support for Bugzilla
 
-***
-
 ## Required Modules
 
 bugzilla-openid needs Net::OpenID::Consumer in order to consume

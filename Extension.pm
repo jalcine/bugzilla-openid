@@ -59,8 +59,7 @@ sub config_modify_panels {
     my $panels = $args->{'panels'};
     my $auth_panel_params = $panels->{'auth'}->{'params'};
 
-    my ($user_info_class) =
-                grep { $_->{'name'} eq 'user_info_class' } @$auth_panel_params;
+    my ($user_info_class) = grep { $_->{'name'} eq 'user_info_class' } @$auth_panel_params;
 
     if ($user_info_class) {
         push(@{ $user_info_class->{'choices'} }, "OpenID,CGI");
@@ -97,6 +96,8 @@ sub user_preferences {
 
 sub page_before_template {
     my ($self,$args) = @_;
+
+    # TODO: Refactor this out into a separate module.
 
     my $cgi = Bugzilla->cgi();
     my $page_id = $args->{'page_id'};
@@ -153,19 +154,19 @@ sub page_before_template {
 }
 
 # TODO: In the future, provide a service permitting OpenID-based log-ins.
-#sub webservice {
-#    my ($self, $args) = @_;
-#
-#    my $dispatch = $args->{dispatch};
-#    $dispatch->{OpenID} = "Bugzilla::Extension::OpenID::WebService";
-#}
+# TODO: Make this into a separate module.
+sub webservice {
+    my ($self, $args) = @_;
 
-#sub webservice_error_codes {
-#     my ($self, $args) = @_;
-#
-#     my $error_map = $args->{error_map};
-#     $error_map->{'openid_general_error'} = 10001;
-# }
+    my $dispatch = $args->{dispatch};
+    $dispatch->{OpenID} = "Bugzilla::Extension::OpenID::WebService";
+}
 
-# This must be the last line of your extension.
+sub webservice_error_codes {
+     my ($self, $args) = @_;
+
+     my $error_map = $args->{error_map};
+     $error_map->{'openid_general_error'} = 10001;
+ }
+
 __PACKAGE__->NAME;
